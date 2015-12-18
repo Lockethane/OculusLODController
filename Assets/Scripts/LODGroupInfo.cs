@@ -86,6 +86,11 @@ public class LODGroupInfo : MonoBehaviour {
 			SetLods (cachedTransitionsLods, true);
     }
 
+	/// <summary>
+	/// Helper function to set LODs only when the conditions change
+	/// </summary>
+	/// <param name="lod_transitions">New set of LOD transition ranges</param>
+	/// <param name="original_lod">Wether it is the original set of LOD transition ranges</param>
 	private void SetLods(float[] lod_transitions, bool original_lod)
 	{
 		//Camera conditions haven't changed between thresholds
