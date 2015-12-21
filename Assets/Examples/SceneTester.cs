@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections;
+using VRLODModifier;
 
 public class SceneTester : MonoBehaviour {
 
 	public GameObject prefab;
 
 	public Transform cameraController;
-	public Camera camera;
+	public Camera VRCamera;
 
 	// Use this for initialization
 	void Start () {
@@ -14,19 +14,23 @@ public class SceneTester : MonoBehaviour {
 
 		UnityEngine.VR.InputTracking.Recenter ();
 
-		//Set up 10x10 grid
-		for (int row=0; row<10; ++row) {
-			for(int col=0;col<10; ++col)
+        int grid_size = 30;
+
+		//Set up 20x20 grid
+		for (int row=0; row<grid_size; ++row) {
+			for(int col=0;col< grid_size; ++col)
 			{
 				Vector3 pos = transform.position;
-				pos.x += (-5+row);
+				pos.x += ((-(float)(grid_size/2.0f))+row);
 				pos.z += (col);
 				GameObject obj = (GameObject)Instantiate(prefab,pos,Quaternion.identity);
 				LODGroupInfo groupInfo = obj.GetComponent<LODGroupInfo>();
-				groupInfo.cam = camera;
+				groupInfo.cam = VRCamera;
 
 				//Set the screen percentage that each side should be affected
-				groupInfo.screen_percentage_border = new Vector4(0.15f,0.15f,0.15f,0.15f);
+				groupInfo.screenPercentageBorder = new Vector4(0.15f,0.15f,0.15f,0.15f);
+
+                this.GetComponent<LODController>().lodObjects.Add(groupInfo);
 			}
 		}
 	}
