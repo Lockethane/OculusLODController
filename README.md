@@ -6,7 +6,7 @@ Objects using the LODGroupInfo script test their sceen space position using the 
 Currently researching Android performance and necessarily changes for GearVR usage.
 
 Current performance:
-Intel i5 3570k: 0.00-0.06 milliseconds with a border of 15% depending on how fast user is moving head.
+Intel i5 3570k: 0.04/0.16/0.4 milliseconds with 10x10/20x20/30x30 grid with a border of 15%
 
 Current limitations:
 Modified LOD array must be same size of built in LOD set.
