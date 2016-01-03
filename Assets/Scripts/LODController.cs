@@ -5,9 +5,14 @@ namespace VRLODModifier
 {
     public class LODController : MonoBehaviour {
 
-        public List<LODGroupInfo> lodObjects;
+        private List<LODGroupInfo> lodObjects;
 
 	    void Start () {
+			//Since the startup order cannot be guaranteed need to potentially instantiate list
+			if (lodObjects == null) 
+			{
+				lodObjects = new List<LODGroupInfo>();
+			}
         }
 	
 	    // Update is called once per frame
@@ -18,5 +23,21 @@ namespace VRLODModifier
                 lodObjects[i].LODUpdate();
             }
         }
+
+		public void AddLodGroupInfo(LODGroupInfo info)
+		{
+			//Since the startup order cannot be guaranteed need to potentially instantiate list
+			if (lodObjects == null) 
+			{
+				lodObjects = new List<LODGroupInfo>();
+			}
+
+			lodObjects.Add(info);
+		}
+
+		public void RemoveLODGroupInfo(LODGroupInfo info)
+		{
+			lodObjects.Remove(info);
+		}
     }
 }

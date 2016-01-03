@@ -30,7 +30,7 @@ public class SceneTester : MonoBehaviour {
 				//Set the screen percentage that each side should be affected
 				groupInfo.screenPercentageBorder = new Vector4(0.15f,0.15f,0.15f,0.15f);
 
-                this.GetComponent<LODController>().lodObjects.Add(groupInfo);
+                this.GetComponent<LODController>().AddLodGroupInfo(groupInfo);
 			}
 		}
 	}
