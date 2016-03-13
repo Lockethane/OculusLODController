@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using VRLODModifier;
+using VRLODController;
 
 public class SceneTester : MonoBehaviour {
 

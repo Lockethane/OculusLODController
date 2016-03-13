@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
-using VRLODModifier;
+using VRLODController;
 
 public class NewEditorTest {
 
@@ -20,11 +20,11 @@ public class NewEditorTest {
         GameObject lod = GameObject.Find("Lod1");
         GameObject testLOD = GameObject.Instantiate(lod);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
-        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.15f, 0.15f);
+        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.85f, 0.15f);
         info.Start();
         info.LODUpdate();
         
-        Assert.AreEqual(info.usingOriginalLod, false);
+        Assert.AreEqual(info.UsingOriginalLod, false);
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class NewEditorTest {
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, true);
+        Assert.AreEqual(info.UsingOriginalLod, true);
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class NewEditorTest {
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, true);
+        Assert.AreEqual(info.UsingOriginalLod, true);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class NewEditorTest {
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, false);
+        Assert.AreEqual(info.UsingOriginalLod, false);
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class NewEditorTest {
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, false);
+        Assert.AreEqual(info.UsingOriginalLod, false);
     }
 
     [Test]
@@ -81,11 +81,11 @@ public class NewEditorTest {
         GameObject lod = GameObject.Find("Lod3");
         GameObject testLOD = GameObject.Instantiate(lod);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
-        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.15f, 0.15f);
+        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.85f, 0.15f);
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, false);
+        Assert.AreEqual(info.UsingOriginalLod, false);
     }
 
     [Test]
@@ -97,6 +97,6 @@ public class NewEditorTest {
         info.Start();
         info.LODUpdate();
 
-        Assert.AreEqual(info.usingOriginalLod, true);
+        Assert.AreEqual(info.UsingOriginalLod, true);
     }
 }

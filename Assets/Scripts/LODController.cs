@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace VRLODModifier
+namespace VRLODController
 {
     public class LODController : MonoBehaviour {
 

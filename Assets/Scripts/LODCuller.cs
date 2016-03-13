@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using VRLODModifier;
+using VRLODController;
 
 public class LODCuller : MonoBehaviour {
 
@@ -25,7 +25,7 @@ public class LODCuller : MonoBehaviour {
 
 	void OnBecameVisible()
 	{
-		if (groupInfo) 
+		if (controller && groupInfo) 
 		{
 			controller.AddLodGroupInfo(groupInfo);
 		}
@@ -33,7 +33,7 @@ public class LODCuller : MonoBehaviour {
 	
 	void OnBecameInvisible() 
 	{
-		if (groupInfo) 
+		if (controller && groupInfo) 
 		{
 			controller.RemoveLODGroupInfo(groupInfo);
 		}

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Reflection;
 
-namespace VRLODModifier
+namespace VRLODController
 { 
 
     public class LODGroupInfo : MonoBehaviour {
@@ -20,12 +20,16 @@ namespace VRLODModifier
 	    //Modified LOD ranges
 	    public float[] customLODs;
 	    //Whether or not it is in regular LOD mode
-	    public bool usingOriginalLod = true;
-    
-	    //Maximum threshold in percentage of the screen from the border of the screen
-	    //Order is clockwise. X:Left, Y:Top, Z:Right, W:Bottom
-	    //0-1 value from border
-	    public Vector4 screenPercentageBorder = new Vector4(0.0f,0.0f,0.0f,0.0f);
+	    bool usingOriginalLod = true;
+        public bool UsingOriginalLod
+        {
+            get { return usingOriginalLod; }
+        }
+
+        //Maximum threshold in percentage of the screen from the border of the screen
+        //Order is clockwise. X:Left, Y:Top, Z:Right, W:Bottom
+        //0-.5 value from left/bottom border to center, .5-1 from center to top/right border
+        public Vector4 screenPercentageBorder = new Vector4(0.0f,0.0f,0.0f,0.0f);
 
 	    //Minimun distance in meters from camera before applying modifiers 
 	    public float minActivationDistance = 1.0f;
@@ -78,8 +82,8 @@ namespace VRLODModifier
 		    float screenPercentPositionY = Mathf.Clamp01( screenPos.y / Screen.height);
 
 		    //Is the object on the borders set by the threshold
-		    bool outsideThreshold = (screenPercentPositionX < screenPercentageBorder.x || screenPercentPositionX > (1.0f - screenPercentageBorder.z)) ||
-								    (screenPercentPositionY < screenPercentageBorder.y || screenPercentPositionY > (1.0f - screenPercentageBorder.w));
+		    bool outsideThreshold = (screenPercentPositionX < screenPercentageBorder.x || screenPercentPositionX > (screenPercentageBorder.z)) ||
+								    (screenPercentPositionY > screenPercentageBorder.y || screenPercentPositionY < (screenPercentageBorder.w));
 
 		    //Is the object far enough away from the camera
 		    bool outside_range_border = screenPos.z > minActivationDistance;
