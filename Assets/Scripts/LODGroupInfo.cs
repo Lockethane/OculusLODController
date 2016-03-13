@@ -10,7 +10,7 @@ namespace VRLODModifier
 	    //Camera viewing this object
 	    public Camera cam;
 	    //Cached Transform of LOD parent(This object)
-        Transform cached_transform;
+        Transform cachedTransform;
 	    //Cached LODGroup component(This object)
 	    LODGroup lodGroup;
 	    //Cached LODs
@@ -20,7 +20,7 @@ namespace VRLODModifier
 	    //Modified LOD ranges
 	    public float[] customLODs;
 	    //Whether or not it is in regular LOD mode
-	    bool usingOriginalLod = true;
+	    public bool usingOriginalLod = true;
     
 	    //Maximum threshold in percentage of the screen from the border of the screen
 	    //Order is clockwise. X:Left, Y:Top, Z:Right, W:Bottom
@@ -30,7 +30,7 @@ namespace VRLODModifier
 	    //Minimun distance in meters from camera before applying modifiers 
 	    public float minActivationDistance = 1.0f;
 
-        void Start ()
+        public void Start()
         {
 
 		    //Get the LODGroup controller to get manipulate LOD ranges
@@ -64,27 +64,28 @@ namespace VRLODModifier
             for(int index=0; index < customLODs.Length; ++index) 
 			    cachedTransitionsLods[index] = lods[index].screenRelativeTransitionHeight;
 
-            cached_transform = transform;
+            cachedTransform = transform;
         }
         
-        public void LODUpdate () 
+        public void LODUpdate() 
 	    {
             //Get the screen space of the object
-            Vector3 screenPos = cam.WorldToScreenPoint(cached_transform.position);
+            Vector3 screenPos = cam.WorldToScreenPoint(cachedTransform.position);
 		
             //Get the 0-1 percent of where the object is on the screen from the left/bottom
-		    float screen_percent_positionX = screenPos.x / Screen.width;
-		    float screen_percent_positionY = screenPos.y / Screen.height;
+            //Clamp to 0-1 since if the LOD is outside the screen, the system shouldn't care
+		    float screenPercentPositionX = Mathf.Clamp01( screenPos.x / Screen.width);
+		    float screenPercentPositionY = Mathf.Clamp01( screenPos.y / Screen.height);
 
-		    //Is the object on the borders set within the threshold
-		    bool within_threshold = (screen_percent_positionX < screenPercentageBorder.x || screen_percent_positionX > (1.0f - screenPercentageBorder.z)) ||
-								    (screen_percent_positionY < screenPercentageBorder.y || screen_percent_positionY > (1.0f - screenPercentageBorder.w));
+		    //Is the object on the borders set by the threshold
+		    bool outsideThreshold = (screenPercentPositionX < screenPercentageBorder.x || screenPercentPositionX > (1.0f - screenPercentageBorder.z)) ||
+								    (screenPercentPositionY < screenPercentageBorder.y || screenPercentPositionY > (1.0f - screenPercentageBorder.w));
 
 		    //Is the object far enough away from the camera
 		    bool outside_range_border = screenPos.z > minActivationDistance;
 
 		    //Test whether or not to use custom transitions
-		    if (outside_range_border && within_threshold)
+		    if (outside_range_border && outsideThreshold)
 			    SetLods (customLODs, false);
 		    else
 			    SetLods (cachedTransitionsLods, true);
@@ -93,24 +94,24 @@ namespace VRLODModifier
 	    /// <summary>
 	    /// Helper function to set LODs only when the conditions change
 	    /// </summary>
-	    /// <param name="lod_transitions">New set of LOD transition ranges</param>
-	    /// <param name="original_lod">Wether it is the original set of LOD transition ranges</param>
-	    private void SetLods(float[] lod_transitions, bool original_lod)
+	    /// <param name="lodTransitions">New set of LOD transition ranges</param>
+	    /// <param name="originaLOD">Wether it is the original set of LOD transition ranges</param>
+	    private void SetLods(float[] lodTransitions, bool originaLOD)
 	    {
 		    //Camera conditions haven't changed between thresholds
-		    if (usingOriginalLod == original_lod)
+		    if (usingOriginalLod == originaLOD)
 			    return;
 
 		    //Change the screen perecentage that the object has to be for the lod to take place
-		    for(int index=0; index < lod_transitions.Length; ++index)
+		    for(int index=0; index < lodTransitions.Length; ++index)
 		    {
-			    lods[index].screenRelativeTransitionHeight = lod_transitions[index];
+			    lods[index].screenRelativeTransitionHeight = lodTransitions[index];
 		    }
 		    //Update the objects lod manager
 		    lodGroup.SetLODs(lods);
 
 		    //Toggle wether or not the object is using original LOD's to shortcut calling SetLODs
-		    usingOriginalLod = original_lod;
+		    usingOriginalLod = originaLOD;
 	    }
     }
 }

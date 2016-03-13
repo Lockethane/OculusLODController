@@ -8,29 +8,30 @@ public class SceneTester : MonoBehaviour {
 	public Transform cameraController;
 	public Camera VRCamera;
 
+    public Vector4 screenPercentageBorder;
+
 	// Use this for initialization
 	void Start () {
 		Debug.Log ("Screen Resolution:" + Screen.currentResolution);
 
 		UnityEngine.VR.InputTracking.Recenter ();
+        QualitySettings.lodBias = 1;
 
-        int grid_size = 30;
+        int gridSize = 30;
 
-		//Set up 20x20 grid
-		for (int row=0; row<grid_size; ++row) {
-			for(int col=0;col< grid_size; ++col)
+        //Set up gridSize x gridSize grid
+        for (int row=0; row<gridSize; ++row) {
+			for(int col=0;col< gridSize; ++col)
 			{
 				Vector3 pos = transform.position;
-				pos.x += ((-(float)(grid_size/2.0f))+row);
+				pos.x += ((-(float)(gridSize/2.0f))+row);
 				pos.z += (col);
 				GameObject obj = (GameObject)Instantiate(prefab,pos,Quaternion.identity);
 				LODGroupInfo groupInfo = obj.GetComponent<LODGroupInfo>();
 				groupInfo.cam = VRCamera;
 
-				//Set the screen percentage that each side should be affected
-				groupInfo.screenPercentageBorder = new Vector4(0.15f,0.15f,0.15f,0.15f);
-
-                this.GetComponent<LODController>().AddLodGroupInfo(groupInfo);
+                //Set the screen percentage that each side should be affected
+                groupInfo.screenPercentageBorder = screenPercentageBorder;
 			}
 		}
 	}
