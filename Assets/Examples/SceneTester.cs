@@ -15,8 +15,7 @@ public class SceneTester : MonoBehaviour {
 		Debug.Log ("Screen Resolution:" + Screen.currentResolution);
 
 		UnityEngine.VR.InputTracking.Recenter ();
-        QualitySettings.lodBias = 1;
-
+        
         int gridSize = 30;
 
         //Set up gridSize x gridSize grid

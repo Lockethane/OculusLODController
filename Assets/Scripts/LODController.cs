@@ -32,7 +32,8 @@ namespace VRLODController
 				lodObjects = new List<LODGroupInfo>();
 			}
 
-			lodObjects.Add(info);
+            if(!lodObjects.Contains(info))
+			    lodObjects.Add(info);
 		}
 
 		public void RemoveLODGroupInfo(LODGroupInfo info)
