@@ -17,12 +17,15 @@ public class NewEditorTest {
     [Test]
     public void LeftWithBorder()
     {
-        GameObject lod = GameObject.Find("Lod1");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width*0.10f, Screen.height / 2, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
-        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.85f, 0.15f);
+        
+        info.screenPercentageBorder = new Vector4(0.15f, 0.85f, 0.85f, 0.15f);
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
         
         Assert.AreEqual(info.UsingOriginalLod, false);
     }
@@ -30,11 +33,15 @@ public class NewEditorTest {
     [Test]
     public void LeftWithNoBorder()
     {
-        GameObject lod = GameObject.Find("Lod1");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width * 0.10f, Screen.height / 2, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
+
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, true);
     }
@@ -42,11 +49,16 @@ public class NewEditorTest {
     [Test]
     public void CenterWithBorder()
     {
-        GameObject lod = GameObject.Find("CenterLOD");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height / 2, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
+
+        info.screenPercentageBorder = new Vector4(0.15f, 0.85f, 0.85f, 0.15f);
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, true);
     }
@@ -54,11 +66,16 @@ public class NewEditorTest {
     [Test]
     public void CenterTopWithBorder()
     {
-        GameObject lod = GameObject.Find("CenterTopLOD");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height *0.1f, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
+
+        info.screenPercentageBorder = new Vector4(0.15f, 0.85f, 0.85f, 0.15f);
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, false);
     }
@@ -66,11 +83,15 @@ public class NewEditorTest {
     [Test]
     public void CenterBottomWithBorder()
     {
-        GameObject lod = GameObject.Find("CenterBottomLOD");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height * 0.9f, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
+        info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.85f, 0.15f);
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, false);
     }
@@ -78,12 +99,15 @@ public class NewEditorTest {
     [Test]
     public void RightWithBorder()
     {
-        GameObject lod = GameObject.Find("Lod3");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width *0.9f, Screen.height/2, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
         info.screenPercentageBorder = new Vector4(0.15f, 0.15f, 0.85f, 0.15f);
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, false);
     }
@@ -91,11 +115,14 @@ public class NewEditorTest {
     [Test]
     public void RightWithNoBorder()
     {
-        GameObject lod = GameObject.Find("Lod3");
-        GameObject testLOD = GameObject.Instantiate(lod);
+        GameObject lod = GameObject.Find("LOD");
+        Camera camera = GameObject.FindObjectOfType<Camera>();
+        Vector3 startLoc = camera.ScreenToWorldPoint(new Vector3(Screen.width * 0.9f, Screen.height / 2, -8));
+        GameObject testLOD = (GameObject)GameObject.Instantiate(lod, startLoc, Quaternion.identity);
         LODGroupInfo info = testLOD.GetComponent<LODGroupInfo>();
+        
         info.Start();
-        info.LODUpdate();
+        info.LODUpdate(camera);
 
         Assert.AreEqual(info.UsingOriginalLod, true);
     }

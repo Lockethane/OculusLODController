@@ -6,9 +6,7 @@ namespace VRLODController
 { 
 
     public class LODGroupInfo : MonoBehaviour {
-
-	    //Camera viewing this object
-	    public Camera cam;
+        
 	    //Cached Transform of LOD parent(This object)
         Transform cachedTransform;
 	    //Cached LODGroup component(This object)
@@ -71,7 +69,7 @@ namespace VRLODController
             cachedTransform = transform;
         }
         
-        public void LODUpdate() 
+        public void LODUpdate(Camera cam) 
 	    {
             //Get the screen space of the object
             Vector3 screenPos = cam.WorldToScreenPoint(cachedTransform.position);
@@ -86,7 +84,7 @@ namespace VRLODController
 								    (screenPercentPositionY > screenPercentageBorder.y || screenPercentPositionY < (screenPercentageBorder.w));
 
 		    //Is the object far enough away from the camera
-		    bool outside_range_border = screenPos.z > minActivationDistance;
+		    bool outside_range_border = Mathf.Abs(screenPos.z) > minActivationDistance;
 
 		    //Test whether or not to use custom transitions
 		    if (outside_range_border && outsideThreshold)

@@ -6,8 +6,7 @@ public class SceneTester : MonoBehaviour {
 	public GameObject prefab;
 
 	public Transform cameraController;
-	public Camera VRCamera;
-
+	
     public Vector4 screenPercentageBorder;
 
 	// Use this for initialization
@@ -27,8 +26,7 @@ public class SceneTester : MonoBehaviour {
 				pos.z += (col);
 				GameObject obj = (GameObject)Instantiate(prefab,pos,Quaternion.identity);
 				LODGroupInfo groupInfo = obj.GetComponent<LODGroupInfo>();
-				groupInfo.cam = VRCamera;
-
+				
                 //Set the screen percentage that each side should be affected
                 groupInfo.screenPercentageBorder = screenPercentageBorder;
 			}

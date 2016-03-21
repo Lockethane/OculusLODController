@@ -5,6 +5,8 @@ namespace VRLODController
 {
     public class LODController : MonoBehaviour {
 
+        private Camera cam;
+
         private List<LODGroupInfo> lodObjects;
 
 	    void Start () {
@@ -13,6 +15,7 @@ namespace VRLODController
 			{
 				lodObjects = new List<LODGroupInfo>();
 			}
+            cam = this.GetComponent<Camera>();
         }
 	
 	    // Update is called once per frame
@@ -20,7 +23,7 @@ namespace VRLODController
             int lodObjectCount = lodObjects.Count;
 	        for(int i=0;i< lodObjectCount;++i)
             {
-                lodObjects[i].LODUpdate();
+                lodObjects[i].LODUpdate(cam);
             }
         }
 
@@ -32,13 +35,13 @@ namespace VRLODController
 				lodObjects = new List<LODGroupInfo>();
 			}
 
-            if(!lodObjects.Contains(info))
-			    lodObjects.Add(info);
+            lodObjects.Add(info);
 		}
 
 		public void RemoveLODGroupInfo(LODGroupInfo info)
 		{
-			lodObjects.Remove(info);
+            Transform transform = info.transform;
+            lodObjects.Remove(info);
 		}
     }
 }
