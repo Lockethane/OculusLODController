@@ -45,7 +45,7 @@ namespace VRLODController
 	    //Minimun distance in meters from camera before applying modifiers 
 	    public float minActivationDistance = 1.0f;
 
-        private Func<Vector3, bool> thresholdDelegate;
+        private Vector2 screenCenter;
 
         public void Start()
         {
@@ -83,18 +83,7 @@ namespace VRLODController
 
             cachedTransform = transform;
 
-            switch(thresholdType)
-            {
-                case ThresholdType.Square:
-                    thresholdDelegate = OutsideThresholdRect;
-                    break;
-                case ThresholdType.Circle:
-                    thresholdDelegate = OutsideThresholdCircle;
-                    break;
-                default:
-                    Debug.LogError("No function defined");
-                    break;
-            }
+            screenCenter = new Vector2((Screen.width / 2) / (float)Screen.width, (Screen.height / 2) / (float)Screen.height);
         }
         
         public void LODUpdate(Camera cam) 
@@ -168,8 +157,6 @@ namespace VRLODController
 
         private bool OutsideThresholdCircle(Vector3 screenPos)
         {
-            Vector2 screenCenter = new Vector2((Screen.width/2)/(float)Screen.width, (Screen.height/2) / (float)Screen.height);
-
             //Get the 0-1 percent of where the object is on the screen from the left/bottom
             //Clamp to 0-1 since if the LOD is outside the screen, the system shouldn't care
             float screenPercentPositionX = Mathf.Clamp01(screenPos.x / Screen.width);
